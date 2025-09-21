@@ -1,7 +1,6 @@
 "use client"
 
 
-import Link from "next/link";
 import { useState } from "react";
 import ColorScale from "~/components/ColorScale";
 import FeatureMap from "~/components/FeatureMap";
@@ -21,9 +20,7 @@ interface LayerData {
   values: number[][]
 }
 
-interface VisualizationData {
-  [layerName: string]: LayerData;
-}
+type VisualizationData = Record<string, LayerData>;
 
 interface WaveformData {
   values: number[]
@@ -106,7 +103,7 @@ function splitLayers(visualization: VisualizationData) {
       const [parent] = name.split(".");
       if (parent === undefined) continue;
 
-      if (!internals[parent]) internals[parent] = [];
+      internals[parent] ??= [];
       internals[parent].push([name, data]);
     }
   }
